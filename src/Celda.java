@@ -1,11 +1,11 @@
 public class Celda 
 {
-    // COLORES DE CELDA
+    // COLORES PARA CELDA
     private static String colorA = "\033[47m";
     private static String colorB = "\033[0;106m";
-    // COLORES DE FICHA
+    // COLORES PARA FICHA
     private static String color1 = "\033[42m";
-    private static String color2 = "\033[43m";
+    private static String color2 = "\033[0;104m";
     // RESTABLECER COLOR A POR DEFECTO
     private static String colorReset = "\033[0m";
 
