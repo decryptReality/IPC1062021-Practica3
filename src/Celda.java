@@ -18,6 +18,24 @@ public class Celda
     private String fila1;
     private String fila2;
 
+    public Celda(boolean esCeldaColorA) 
+    {
+        this.esCeldaColorA = esCeldaColorA;
+        tieneFicha = false;
+        esFichaColor1 = true;
+        colorCelda = "";
+        if(this.esCeldaColorA)
+        {
+            colorCelda = colorA;
+        }
+        else
+        {
+            colorCelda = colorB;
+        }
+        fila1 = colorCelda + "      " + colorReset;
+        fila2 = fila1;
+    }
+
     public String getFila1() {
         return fila1;
     }
