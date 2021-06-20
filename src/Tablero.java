@@ -22,4 +22,26 @@ public class Tablero
             }
         }
     }
+
+    void imprimirTablero() 
+    {
+        for (int i = 0; i < celdasPorLado; i = i + 1) 
+        {
+            for (int j = 0; j < celdasPorLado; j = j + 1)
+            {
+                System.out.print(celdas[i][j].getFila1());
+            }
+            System.out.println();
+            for (int j = 0; j < celdasPorLado; j = j + 1)
+            {
+                System.out.print(celdas[i][j].getFila2());
+            }
+            System.out.println();
+            for (int j = 0; j < celdasPorLado; j = j + 1)
+            {
+                System.out.print(celdas[i][j].getFila1());
+            }
+            System.out.println();
+        }
+    }    
 }
