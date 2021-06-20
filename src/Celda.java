@@ -1,11 +1,11 @@
 public class Celda 
 {
     // COLORES PARA CELDA
-    private static String colorA = "\033[47m";
-    private static String colorB = "\033[0;106m";
+    private static String colorA = "\033[0;107m";
+    private static String colorB = "\033[0;100m";
     // COLORES PARA FICHA
-    private static String color1 = "\033[42m";
-    private static String color2 = "\033[0;104m";
+    private static String color1 = "\033[0;106m";
+    private static String color2 = "\033[0;101m";
     // RESTABLECER COLOR A POR DEFECTO
     private static String colorReset = "\033[0m";
 
@@ -18,52 +18,30 @@ public class Celda
     private String fila1;
     private String fila2;
 
-    public static void main(String[] args)
-    {
-        Celda[] celdas1 = new Celda[2];
-        celdas1[0] = new Celda(false);
-        celdas1[0].setFichaColor1(false);
-        celdas1[1] = new Celda(true);
-        celdas1[1].setFichaColor1(true);
-
-        for(int i = 0; i < celdas1.length; i = i + 1)
-        {
-            System.out.println(celdas1[i].getFila1());
-            System.out.println(celdas1[i].getFila2());
-            System.out.println(celdas1[i].getFila1());
-        }
-        Detalles.limpiarPantalla(5);        
-    }
-
     public Celda(boolean esCeldaColorA) 
     {
         this.esCeldaColorA = esCeldaColorA;
         tieneFicha = false;
         esFichaColor1 = true;
-        colorCelda = "";
-        if(this.esCeldaColorA)
-        {
-            colorCelda = colorA;
-        }
-        else
-        {
-            colorCelda = colorB;
-        }
-        fila1 = colorCelda + "      " + colorReset;
-        fila2 = fila1;
+        colorCelda = this.esCeldaColorA ? colorA : colorB;
+        setFilas();
+    }
+
+    void setSinFicha()
+    {
+        tieneFicha = false;
+        setFilas();
+    }
+
+    void setFichaColor1(boolean esFichaColor1)
+    {
+        tieneFicha = true;
+        this.esFichaColor1 = esFichaColor1;
+        setFilas();
     }
 
     private void setFilas()
     {
-        if(esCeldaColorA)
-        {
-            colorCelda = colorA;
-        }
-        else
-        {
-            colorCelda = colorB;
-        }
-
         if(tieneFicha)
         {
             if(esFichaColor1)
@@ -84,18 +62,9 @@ public class Celda
         }
     }
 
-    void setSinFicha()
+    public String getInformacion()
     {
-        tieneFicha = false;
-        esFichaColor1 = true;
-        setFilas();
-    }
-
-    void setFichaColor1(boolean esFichaColor1)
-    {
-        tieneFicha = true;
-        this.esFichaColor1 = esFichaColor1;
-        setFilas();
+        return "tieneFicha: " + tieneFicha + ", esFichaColor1: " + esFichaColor1 + ", esCeldaColorA: " + esCeldaColorA;
     }
     
     public String getFila1() {
@@ -108,6 +77,10 @@ public class Celda
 
     public boolean getTieneFicha() {
         return tieneFicha;
+    }
+
+    public boolean getEsCeldaColorA() {
+        return esCeldaColorA;
     }
 
     public boolean getEsFichaColor1() {
