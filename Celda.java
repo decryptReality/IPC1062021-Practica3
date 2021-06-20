@@ -18,6 +18,23 @@ public class Celda
     private String fila1;
     private String fila2;
 
+    public static void main(String[] args)
+    {
+        Celda[] celdas1 = new Celda[2];
+        celdas1[0] = new Celda(false);
+        celdas1[0].setFichaColor1(false);
+        celdas1[1] = new Celda(true);
+        celdas1[1].setFichaColor1(true);
+
+        for(int i = 0; i < celdas1.length; i = i + 1)
+        {
+            System.out.println(celdas1[i].getFila1());
+            System.out.println(celdas1[i].getFila2());
+            System.out.println(celdas1[i].getFila1());
+        }
+        Detalles.limpiarPantalla(5);        
+    }
+
     public Celda(boolean esCeldaColorA) 
     {
         this.esCeldaColorA = esCeldaColorA;
