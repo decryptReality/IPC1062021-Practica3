@@ -36,6 +36,20 @@ public class Celda
         fila2 = fila1;
     }
 
+    void setSinFicha()
+    {
+        tieneFicha = false;
+        esFichaColor1 = true;
+        setFilas();
+    }
+
+    void setFichaColor1(boolean esFichaColor1)
+    {
+        tieneFicha = true;
+        this.esFichaColor1 = esFichaColor1;
+        setFilas();
+    }
+    
     public String getFila1() {
         return fila1;
     }
