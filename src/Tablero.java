@@ -5,6 +5,20 @@ public class Tablero
     private Celda[][] celdas;
     private int celdasPorLado;
 
+    void ingresarMovimiento()
+    {
+        Scanner scanner1 = new Scanner(System.in);
+        System.out.print("\nPosicion de la ficha a mover (fil,col): ");
+        int filA = scanner1.nextInt();
+        int colA = scanner1.nextInt();
+        System.out.print("\nPosicion destino (fil,col): ");
+        int filB = scanner1.nextInt();
+        int colB = scanner1.nextInt();
+        System.out.println("\n[?] (" + filA + "," + colA + ") > (" + filB + "," + colB + ")");
+        moverFicha(filA, colA, filB, colB);
+        //scanner1.close();
+    }
+
     void moverFicha(int filA, int colA, int filB, int colB) 
     {
         // el tablero maneja numeros en [1,8], Celda[][] celdas en [0,7]
