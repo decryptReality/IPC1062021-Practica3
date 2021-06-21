@@ -68,11 +68,66 @@ public class Ejecucion
         primerTurno();
     }
 
+    static void primerTurno()
+    {
+        String[] cosas = {"piedra", "papel", "tijera"};
+        String tiroA = cosas[random1.nextInt(3)];
+        String tiroB = cosas[random1.nextInt(3)];
+        while(tiroA.equals(tiroB))
+        {
+             tiroA = cosas[random1.nextInt(3)];
+             tiroB = cosas[random1.nextInt(3)];
+        }
+                        
+        System.out.println("\nPIEDRA, PAPEL O TIJERA");
+        System.out.println("El ganador toma el primer turno");
+        System.out.println(jugadorAaA.getNombre() + ": " + tiroA);
+        System.out.println(jugadorBbB.getNombre() + ": " + tiroB);
+
+        // se unen los resultados para verificar si es forma de ganar
+        String tiroGanador = tiroA + tiroB;
+        //System.out.println("[?] " + tiroGanador);
+
+        // en equals("palabra") hay palabras que son formas de ganar, las unicas
+        boolean esGanadorA = (tiroGanador).equals("piedratijera") | (tiroGanador).equals("papelpiedra") | (tiroGanador).equals("tijerapapel");
+        if(esGanadorA)
+        {
+            System.out.println("[!] Ganador: " + jugadorAaA.getNombre());
+        }
+        else
+        {
+            System.out.println("[!] Ganador: " + jugadorBbB.getNombre());
+        }
+        partida();
+    }
+
     static void listarJugadores()
     {
         for (int j = 0; j < jugadores.length; j = j + 1) 
         {
             System.out.println((j + 1) + ") " + jugadores[j].getNombre());
+        }
+    }
+
+    static void ordenarJugadores()
+    {
+        Jugador[] jugadoresOrdenados = jugadores;
+  
+        for (int i = 0; i < jugadoresOrdenados.length - 1; i = i + 1) 
+        {
+            for (int j = i + 1; j < jugadoresOrdenados.length; j = j + 1) 
+            {
+                if (jugadoresOrdenados[i].getGanadas() < jugadoresOrdenados[j].getGanadas()) 
+                {
+                    Jugador temporal = jugadoresOrdenados[i];
+                    jugadoresOrdenados[i] = jugadoresOrdenados[j];
+                    jugadoresOrdenados[j] = temporal;
+                }
+            }
+        }
+        for (int j = 0; j < jugadoresOrdenados.length; j = j + 1) 
+        {
+            System.out.println((j + 1) + ") " + jugadoresOrdenados[j].getNombre() + ": " + jugadoresOrdenados[j].getGanadas());
         }
     }
 
@@ -108,5 +163,6 @@ public class Ejecucion
                 }
             }
         }
+        menuInicial();
     }
 }
