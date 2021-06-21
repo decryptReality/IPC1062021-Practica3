@@ -75,4 +75,38 @@ public class Ejecucion
             System.out.println((j + 1) + ") " + jugadores[j].getNombre());
         }
     }
+
+    static void partida()
+    {
+        int resp1 = 0;
+        int resp2 = 0;
+
+        tablero1.ordenarFichas();
+        boolean salir = false;
+        while(!salir)
+        {
+            tablero1.ingresarMovimiento();
+            System.out.println("Para continuar ingrese 1, para salir ingrese -1");
+            resp1 = scanner1.nextInt();
+            if(resp1 == -1)
+            {
+                salir = true;
+                System.out.println("Ingrese 1 si es verdadero, 0 sino");
+                System.out.print("Es " + jugadorAaA.getNombre() + " el ganador? ");
+                resp2 = scanner1.nextInt();
+                if(resp2 == 1)
+                {
+                    System.out.print("[?] " + jugadorAaA.getNombre() + " es el ganador");
+                    jugadorAaA.gano();
+                    jugadorBbB.perdio();
+                }
+                else
+                {
+                    System.out.print("[?] " + jugadorBbB.getNombre() + " es el ganador");
+                    jugadorAaA.perdio();
+                    jugadorBbB.gano();
+                }
+            }
+        }
+    }
 }
