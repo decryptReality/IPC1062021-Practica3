@@ -163,6 +163,5 @@ public class Ejecucion
                 }
             }
         }
-        menuInicial();
     }
 }
