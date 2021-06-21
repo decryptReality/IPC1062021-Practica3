@@ -5,6 +5,9 @@ public class Tablero
     private Celda[][] celdas;
     private int celdasPorLado;
 
+    private int fichasColor1;
+    private int fichasColor2;
+
     void ingresarMovimiento()
     {
         Scanner scanner1 = new Scanner(System.in);
@@ -16,7 +19,6 @@ public class Tablero
         int colB = scanner1.nextInt();
         System.out.println("\n[?] (" + filA + "," + colA + ") > (" + filB + "," + colB + ")");
         moverFicha(filA, colA, filB, colB);
-        //scanner1.close();
     }
 
     void moverFicha(int filA, int colA, int filB, int colB) 
@@ -30,59 +32,95 @@ public class Tablero
         // para moverse: celdaA SI tener ficha, y celdaB NO tener ficha, esto se verifica
         Celda fichaA = celdas[filA][colA];
         Celda celdaB = celdas[filB][colB];
-        System.out.println("[?] Ficha sin mover");
-        System.out.println("fichaA: " + fichaA.getInformacion());
-        System.out.println("celdaB: " + celdaB.getInformacion());
 
-        // si celdaA tiene ficha y celaB NO tiene ficha
-        if (fichaA.getTieneFicha() & !celdaB.getTieneFicha()) 
+        // System.out.println("[?] Ficha sin mover");
+        // System.out.println("fichaA: " + fichaA.getInformacion());
+        // System.out.println("celdaB: " + celdaB.getInformacion());
+
+        // diferencias entre posiciones A y B, filas y columnas
+        int difFil = filB - filA;
+        int difCol = colB - colA;
+        // si movimiento es en diagonal
+        boolean esDiagonal = difFil * difFil == difCol * difCol; 
+        // celdaA SI tiene ficha y celaB NO tiene ficha
+        boolean sonCeldasHabiles = fichaA.getTieneFicha() & !celdaB.getTieneFicha();
+        // verificar si ficha se mueve recta, lo correcto es diagonal
+        boolean esDifCERO = difFil == 0 | difCol == 0;
+
+        // System.out.println("[?] Diferencias de posicion entre celdaOrigen y celdaDestino");
+        // System.out.println("difFil: " + difFil);
+        // System.out.println("difCol: " + difCol);
+        if (esDiagonal & sonCeldasHabiles & !esDifCERO) 
         {
-            // diferencias entre posiciones A y B, filas y columnas
-            int difFil = filB - filA;
-            int difCol = colB - colA;
-            System.out.println("difFil: " + difFil);
-            System.out.println("difCol: " + difCol);
-
-            // si diferencias distan 2 unidades y hay ficha oponente en medio
-            if ((difFil == 2 | difFil == -2) & (difCol == 2 | difCol == -2)) 
+            // verificar si ficha se mueve una celda
+            boolean esDifUNO = difFil == 1 | difFil == -1 | difCol == 1 | difCol == -1;
+            // diferencias distan 2 unidad o mas para tener fichaM
+            if (!esDifUNO)            
             {
-                int filM = difFil == 2 ? filA + 1 : filA - 1;
-                int colM = difCol == 2 ? colA + 1 : colA - 1;
+                int filM = difFil > 0 ? filB - 1 : filB + 1;
+                int colM = difCol > 0 ? colB - 1 : colB + 1;
 
                 // celda entre celdaA y celdaB, celdaM
                 Celda celdaM = celdas[filM][colM];
-                System.out.println("celdaM: " + celdaM.getInformacion());
 
                 // si celdaM tiene ficha, fichaM, y coloM != colorA, quitarla
                 if (celdaM.getTieneFicha() & (celdaM.getEsFichaColor1() != fichaA.getEsFichaColor1())) 
                 {
                     celdaM.setSinFicha();
+                    System.out.println("[!] Ficha (" + filM + "," + colM + ") eliminada");
+                    //System.out.println("celdaM: " + celdaM.getInformacion());
                 }
             }
 
             // aqui se mueve la fichaA a celdaB, quitando fichaA de celdaA
-            //Detalles.limpiarPantalla();
             // establecemos celdaB con ficha de color fichaA 
             celdaB.setFichaColor1(fichaA.getEsFichaColor1());
             // [!] setSinFicha() cambia de color a la ficha, es indeseado, 
             // pero asi se elaboro, en otras palabras, cuidado con el orden de su uso
             fichaA.setSinFicha(); 
             System.out.println("[?] Ficha movida");
-            System.out.println("fichaA: " + fichaA.getInformacion());
-            System.out.println("celdaB: " + celdaB.getInformacion());    
-            System.out.println();
+            // System.out.println("fichaA: " + fichaA.getInformacion());
+            // System.out.println("celdaB: " + celdaB.getInformacion() + "\n");    
             imprimirTablero();
+            verificarFichas();
         }
         else
         {
-            System.out.println("[!] No puede mover en alguna posicion");
+            System.out.println("[!] No puede mover en alguna celda");
         }
+    }
+
+    void verificarFichas()
+    {
+        fichasColor1 = 0;
+        fichasColor2 = 0;
+        for (int i = 0; i < celdasPorLado; i = i + 1) 
+        {
+            for (int j = 0; j < celdasPorLado; j = j + 1)
+            {
+                if(celdas[i][j].getTieneFicha())
+                {
+                    if(celdas[i][j].getEsFichaColor1())
+                    {
+                        fichasColor1 = fichasColor1 + 1;
+                    }
+                    else
+                    {
+                        fichasColor2 = fichasColor2 + 1;
+                    }
+                }
+            }
+        }
+        System.out.println("fichasColor1: " + fichasColor1);
+        System.out.println("fichasColor2: " + fichasColor2);
     }
 
     public Tablero(int celdasPorLado) 
     {
         this.celdasPorLado = celdasPorLado;
         celdas = new Celda[celdasPorLado][celdasPorLado];
+        fichasColor1 = 0;
+        fichasColor2 = 0;
 
         for (int i = 0; i < celdasPorLado; i = i + 1) 
         {
@@ -140,5 +178,9 @@ public class Tablero
             }
         }
         imprimirTablero();
+    }
+
+    public int getCeldasPorLado() {
+        return celdasPorLado;
     }
 }
