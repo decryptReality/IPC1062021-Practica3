@@ -52,7 +52,7 @@ public class Ejecucion
         System.out.println("[?] Seleccione ingresando un indice");
         listarJugadores();
 
-        System.out.print("\nIdice de jugadorA: ");
+        System.out.print("\nIndice de jugadorA: ");
         int indiceA = scanner1.nextInt();
         System.out.print("\nNombre de jugadorA: ");
         String nombreA = scanner1.next();
